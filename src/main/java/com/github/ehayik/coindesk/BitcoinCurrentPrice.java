@@ -1,6 +1,5 @@
 package com.github.ehayik.coindesk;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
@@ -12,7 +11,6 @@ public class BitcoinCurrentPrice {
 
     private BitcoinPriceIndex bpi;
 
-    @JsonIgnore
     public Price getUsdPrice() {
         return bpi.getUsdPrice();
     }
