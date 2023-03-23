@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 @Data
-class BitcoinCurrentPrice {
+public class BitcoinCurrentPrice {
 
     private BitcoinPriceIndex bpi;
 
@@ -27,7 +27,7 @@ class BitcoinCurrentPrice {
 
     @Data
     @JsonRootName(value = "bpi")
-    static class BitcoinPriceIndex {
+    public static class BitcoinPriceIndex {
 
         @JsonProperty("USD")
         private Price usdPrice;
@@ -41,7 +41,7 @@ class BitcoinCurrentPrice {
 
     @Data
     @JsonNaming(SnakeCaseStrategy.class)
-    static class Price {
+    public static class Price {
         private Double rateFloat;
     }
 }
