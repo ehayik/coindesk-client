@@ -1,0 +1,76 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.4'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'com.diffplug.spotless' version "6.16.0"
+	id "io.freefair.lombok" version "6.6.2"
+}
+
+group = 'com.github.ehayik'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springShellVersion', "3.0.0")
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.shell:spring-shell-starter'
+	implementation 'org.javamoney:moneta:1.4.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'com.maciejwalkowiak.spring:wiremock-spring-boot:1.0.0'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
+	}
+}
+
+//-- Java version configuration
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+//-- Testing configuration
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+//-- Code formatting  configuration
+apply plugin: 'com.diffplug.spotless'
+
+spotless {
+	java {
+		target fileTree('.') {
+			include '**/*.java'
+			exclude '**/build/**', '**/build-*/**'
+		}
+		palantirJavaFormat()
+		importOrder()
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		endWithNewline()
+		toggleOffOn()
+	}
+}
+
+tasks.register('updateGitHooks', Copy) {
+	from './scripts/pre-commit'
+	into './.git/hooks'
+}
+
+compileJava.dependsOn updateGitHooks
