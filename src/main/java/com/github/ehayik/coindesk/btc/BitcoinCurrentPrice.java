@@ -1,29 +1,22 @@
-package com.github.ehayik.coindesk;
+package com.github.ehayik.coindesk.btc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import java.util.List;
 import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
+@Setter
 public class BitcoinCurrentPrice {
 
     private BitcoinPriceIndex bpi;
 
-    public Price getUsdPrice() {
-        return bpi.getUsdPrice();
+    public List<Price> getPrices() {
+        return List.of(bpi.usdPrice, bpi.eurPrice, bpi.gbpPrice);
     }
 
-    public Price getGbpPrice() {
-        return bpi.getGbpPrice();
-    }
-
-    public Price getEurPrice() {
-        return bpi.getEurPrice();
-    }
-
-    @Data
+    @SuppressWarnings("unused")
     @JsonRootName(value = "bpi")
     public static class BitcoinPriceIndex {
 
@@ -38,8 +31,12 @@ public class BitcoinCurrentPrice {
     }
 
     @Data
-    @JsonNaming(SnakeCaseStrategy.class)
+    @Accessors(chain = true)
     public static class Price {
-        private Double rateFloat;
+
+        private String code;
+
+        @JsonProperty("rate_float")
+        private Double rate;
     }
 }

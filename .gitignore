@@ -38,3 +38,4 @@ out/
 
 .java-version
 *.log
+*.gz

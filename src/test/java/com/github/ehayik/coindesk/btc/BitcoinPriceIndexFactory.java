@@ -1,8 +1,25 @@
-package com.github.ehayik.coindesk;
+package com.github.ehayik.coindesk.btc;
 
-final class BitcoinPriceIndexJsonFactory {
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static lombok.AccessLevel.PRIVATE;
 
-    static String getCurrentPriceIndexJson() {
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ehayik.coindesk.btc.BitcoinCurrentPrice.Price;
+import java.util.List;
+import javax.money.MonetaryAmount;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.SneakyThrows;
+import org.javamoney.moneta.Money;
+
+@NoArgsConstructor(access = PRIVATE)
+final class BitcoinPriceIndexFactory {
+
+    static final MonetaryAmount PRICE_USD = Money.of(27611.6511, "USD");
+    static final MonetaryAmount PRICE_EUR = Money.of(26897.7795, "EUR");
+    static final MonetaryAmount PRICE_GBP = Money.of(23072.0748, "GBP");
+
+    static String createCurrentPriceIndexJson() {
         return """
                 {
                   "time": {
@@ -37,5 +54,22 @@ final class BitcoinPriceIndexJsonFactory {
                   }
                 }
                 """;
+    }
+
+    @SneakyThrows
+    static BitcoinCurrentPrice createCurrentPriceIndex() {
+        return new ObjectMapper()
+                .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .readValue(createCurrentPriceIndexJson(), BitcoinCurrentPrice.class);
+    }
+
+    static Price createPrice(@NonNull MonetaryAmount amount) {
+        return new Price()
+                .setCode(amount.getCurrency().getCurrencyCode())
+                .setRate(amount.getNumber().doubleValue());
+    }
+
+    static List<MonetaryAmount> createMonetaryAmountList() {
+        return List.of(PRICE_USD, PRICE_EUR, PRICE_GBP);
     }
 }

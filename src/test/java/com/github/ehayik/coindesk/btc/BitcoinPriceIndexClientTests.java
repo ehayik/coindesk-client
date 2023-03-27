@@ -1,10 +1,13 @@
-package com.github.ehayik.coindesk;
+package com.github.ehayik.coindesk.btc;
 
-import static com.github.ehayik.coindesk.BitcoinPriceIndexJsonFactory.getCurrentPriceIndexJson;
+import static com.github.ehayik.coindesk.btc.BitcoinPriceIndexFactory.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.list;
 
+import com.github.ehayik.coindesk.btc.BitcoinCurrentPrice.Price;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
 import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
@@ -18,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class BitcoinPriceIndexClientTests {
 
     @WireMock("bpi-service")
-    private WireMockServer wiremock;
+    WireMockServer wiremock;
 
     @Autowired
     BitcoinPriceIndexClient bpiClient;
@@ -29,12 +32,17 @@ class BitcoinPriceIndexClientTests {
         wiremock.stubFor(get("/bpi/currentprice.json")
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/javascript")
-                        .withBody(getCurrentPriceIndexJson())));
+                        .withBody(createCurrentPriceIndexJson())));
 
         // When
-        BitcoinCurrentPrice priveIndex = bpiClient.getPriceIndexOnRealTime();
+        BitcoinCurrentPrice result =
+                bpiClient.getPriceIndexOnRealTime().blockOptional().orElse(null);
 
         // Then
-        assertThat(priveIndex).isNotNull();
+        assertThat(result)
+                .isNotNull()
+                .extracting(BitcoinCurrentPrice::getPrices, as(list(Price.class)))
+                .isNotEmpty()
+                .contains(createPrice(PRICE_USD), createPrice(PRICE_GBP), createPrice(PRICE_EUR));
     }
 }

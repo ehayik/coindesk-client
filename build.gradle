@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.github.ehayik'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 repositories {
 	mavenCentral()
@@ -24,12 +24,13 @@ configurations {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.shell:spring-shell-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.javamoney:moneta:1.4.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'com.maciejwalkowiak.spring:wiremock-spring-boot:1.0.0'
+	testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 dependencyManagement {
