@@ -43,7 +43,7 @@ class BitcoinPriceWatchingCommandsTests {
                 .willReturn(Mono.just(createMonetaryAmountList()));
 
         // When
-        componentUnderTest.watchBitcoinPrice(givenInterval);
+        componentUnderTest.displayBitcoinPrice(givenInterval);
 
         // Then
         assertThatPricesTableIsPrinted(atMostOnce());
@@ -70,7 +70,7 @@ class BitcoinPriceWatchingCommandsTests {
                 .willReturn(Mono.just(createMonetaryAmountList()));
 
         // When
-        componentUnderTest.watchBitcoinPrice(Duration.ofMillis(3));
+        componentUnderTest.displayBitcoinPrice(Duration.ofMillis(3));
 
         // Then
         await().untilAsserted(() -> assertThatPricesTableIsPrinted(atLeast(2)));

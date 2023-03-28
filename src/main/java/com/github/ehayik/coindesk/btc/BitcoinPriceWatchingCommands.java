@@ -1,12 +1,12 @@
 package com.github.ehayik.coindesk.btc;
 
 import static java.time.Duration.ZERO;
+import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.springframework.shell.standard.ShellOption.NULL;
 
 import com.github.ehayik.coindesk.shell.ShellHelper;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.money.MonetaryAmount;
@@ -49,16 +49,16 @@ class BitcoinPriceWatchingCommands {
 
     @PreDestroy
     @ShellMethod(
-            value = "Stop Bitcoin Price Index (BPI) requests.",
+            value = "Stop displaying the Bitcoin Price Index (BPI).",
             key = {"stop bitcoin", "stop btc"})
     void stopBitcoinPriceRequest() {
         stopEmitter.tryEmitNext(true);
     }
 
     @ShellMethod(
-            value = "Watch the Bitcoin Price Index (BPI) in real-time.",
+            value = "Display the Bitcoin Price Index (BPI) in real-time.",
             key = {"bitcoin", "btc"})
-    void watchBitcoinPrice(
+    void displayBitcoinPrice(
             @ShellOption(
                             value = {"--watch", "-w"},
                             defaultValue = NULL,
@@ -80,8 +80,9 @@ class BitcoinPriceWatchingCommands {
     }
 
     private void printBitcoinPriceTable(List<MonetaryAmount> prices) {
-        var currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        var currentTime = LocalDateTime.now().format(ofPattern("dd/MM/yyyy HH:mm:ss"));
         shellHelper.printInfo("Bitcoin Price Index (%s)".formatted(currentTime));
+
         var tableBuilder = new TableBuilder(asArrayTableModel(prices));
         tableBuilder.addFullBorder(BorderStyle.oldschool);
         shellHelper.print(tableBuilder.build().render(80));

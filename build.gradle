@@ -39,6 +39,10 @@ dependencyManagement {
 	}
 }
 
+bootJar {
+	launchScript()
+}
+
 //-- Java version configuration
 java {
 	toolchain {
