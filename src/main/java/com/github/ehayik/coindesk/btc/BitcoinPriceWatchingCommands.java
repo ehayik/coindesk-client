@@ -35,7 +35,6 @@ class BitcoinPriceWatchingCommands {
                 - m for minutes
                 - h for hours
                 - d for days
-            [Optional, default = <none>]
             """;
 
     private final ShellHelper shellHelper;
@@ -60,7 +59,11 @@ class BitcoinPriceWatchingCommands {
             value = "Watch the Bitcoin Price Index (BPI) in real-time.",
             key = {"bitcoin", "btc"})
     void watchBitcoinPrice(
-            @ShellOption(value = "-rf", defaultValue = NULL, help = REFRESH_RATE_HELP) Duration refreshRate) {
+            @ShellOption(
+                            value = {"--watch", "-w"},
+                            defaultValue = NULL,
+                            help = REFRESH_RATE_HELP)
+                    Duration refreshRate) {
 
         if (refreshRate == null || refreshRate == ZERO) {
             priceIndexService //
