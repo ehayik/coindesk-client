@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.shell:spring-shell-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.javamoney:moneta:1.4.2'
+	implementation 'net.sizovs:pipelinr:0.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'com.maciejwalkowiak.spring:wiremock-spring-boot:1.0.0'
@@ -79,3 +80,13 @@ tasks.register('updateGitHooks', Copy) {
 }
 
 compileJava.dependsOn updateGitHooks
+
+//-- Cleaning
+tasks.register("deleteLogs", Delete) {
+	delete fileTree('.') {
+		include '**/*.log'
+		include '**/*.gz'
+	}
+}
+
+clean.dependsOn deleteLogs

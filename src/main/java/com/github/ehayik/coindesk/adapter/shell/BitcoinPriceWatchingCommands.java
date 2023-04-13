@@ -1,13 +1,14 @@
-package com.github.ehayik.coindesk.btc;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import static java.time.Duration.ZERO;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.springframework.shell.standard.ShellOption.NULL;
 
-import com.github.ehayik.coindesk.shell.ShellHelper;
+import an.awesome.pipelinr.Pipeline;
+import com.github.ehayik.coindesk.core.BitcoinCurrentPriceIndexCommand;
+import com.github.ehayik.coindesk.core.PriceIndex;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.money.MonetaryAmount;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,13 @@ import org.springframework.shell.table.ArrayTableModel;
 import org.springframework.shell.table.BorderStyle;
 import org.springframework.shell.table.TableBuilder;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 @Slf4j
 @ShellComponent
 @SuppressWarnings("unused")
-class BitcoinPriceWatchingCommands {
+public class BitcoinPriceWatchingCommands {
 
     private static final String REFRESH_RATE_HELP =
             """
@@ -39,11 +41,11 @@ class BitcoinPriceWatchingCommands {
 
     private final ShellHelper shellHelper;
     private final Sinks.Many<Boolean> stopEmitter;
-    private final BitcoinPriceIndexService priceIndexService;
+    private final Pipeline pipeline;
 
-    BitcoinPriceWatchingCommands(ShellHelper shellHelper, BitcoinPriceIndexService priceIndexService) {
+    BitcoinPriceWatchingCommands(ShellHelper shellHelper, Pipeline pipeline) {
         this.shellHelper = shellHelper;
-        this.priceIndexService = priceIndexService;
+        this.pipeline = pipeline;
         stopEmitter = Sinks.many().multicast().onBackpressureBuffer();
     }
 
@@ -58,39 +60,38 @@ class BitcoinPriceWatchingCommands {
     @ShellMethod(
             value = "Display the Bitcoin Price Index (BPI) in real-time.",
             key = {"bitcoin", "btc"})
-    void displayBitcoinPrice(
+    public void displayBitcoinPrice(
             @ShellOption(
                             value = {"--watch", "-w"},
                             defaultValue = NULL,
                             help = REFRESH_RATE_HELP)
                     Duration refreshRate) {
 
+        var bitcoinPriceIndex = Mono.from(new BitcoinCurrentPriceIndexCommand().execute(pipeline));
+
         if (refreshRate == null || refreshRate == ZERO) {
-            priceIndexService //
-                    .getPriceIndexOnRealTime()
-                    .blockOptional()
-                    .ifPresent(this::printBitcoinPriceTable);
+            bitcoinPriceIndex.blockOptional().ifPresent(this::printBitcoinPriceTable);
             return;
         }
 
         Flux.interval(ZERO, refreshRate)
-                .flatMap(x -> priceIndexService.getPriceIndexOnRealTime())
+                .flatMap(x -> bitcoinPriceIndex)
                 .takeUntilOther(stopEmitter.asFlux())
                 .subscribe(this::printBitcoinPriceTable);
     }
 
-    private void printBitcoinPriceTable(List<MonetaryAmount> prices) {
+    private void printBitcoinPriceTable(PriceIndex priceIndex) {
         var currentTime = LocalDateTime.now().format(ofPattern("dd/MM/yyyy HH:mm:ss"));
         shellHelper.printInfo("Bitcoin Price Index (%s)".formatted(currentTime));
 
-        var tableBuilder = new TableBuilder(asArrayTableModel(prices));
+        var tableBuilder = new TableBuilder(asArrayTableModel(priceIndex));
         tableBuilder.addFullBorder(BorderStyle.oldschool);
         shellHelper.print(tableBuilder.build().render(80));
     }
 
-    private static ArrayTableModel asArrayTableModel(List<MonetaryAmount> prices) {
-        var formattedPrices = prices //
-                .stream()
+    private static ArrayTableModel asArrayTableModel(PriceIndex priceIndex) {
+        var formattedPrices = priceIndex //
+                .getPrices()
                 .map(MonetaryAmount::toString)
                 .toArray(String[]::new);
 

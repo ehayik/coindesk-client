@@ -1,10 +1,10 @@
-package com.github.ehayik.coindesk.shell;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import lombok.RequiredArgsConstructor;
 
 @SuppressWarnings("unused")
 @RequiredArgsConstructor
-public enum PromptColor {
+enum PromptColor {
     BLACK(0),
     RED(1),
     GREEN(2),

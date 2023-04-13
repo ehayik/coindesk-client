@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.shell;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

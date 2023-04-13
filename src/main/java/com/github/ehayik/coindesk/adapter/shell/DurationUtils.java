@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.cloud.skipper.support;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -28,7 +28,7 @@ import org.springframework.util.StringUtils;
  * @author Janne Valkealahti
  *
  */
-public final class DurationUtils {
+final class DurationUtils {
 
     /**
      * Converts a duration expression into {@link Duration}.

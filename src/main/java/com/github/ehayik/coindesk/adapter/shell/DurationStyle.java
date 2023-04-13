@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.cloud.skipper.support;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -31,7 +31,7 @@ import org.springframework.util.StringUtils;
  * @author Janne Valkealahti
  *
  */
-public enum DurationStyle {
+enum DurationStyle {
 
     /**
      * Simple formatting, for example '1s'.

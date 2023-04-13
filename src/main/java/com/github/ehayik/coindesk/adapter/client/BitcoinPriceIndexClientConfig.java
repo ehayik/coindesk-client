@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.btc;
+package com.github.ehayik.coindesk.adapter.client;
 
 import static org.springframework.util.MimeTypeUtils.parseMimeType;
 import static org.springframework.web.reactive.function.client.support.WebClientAdapter.forClient;

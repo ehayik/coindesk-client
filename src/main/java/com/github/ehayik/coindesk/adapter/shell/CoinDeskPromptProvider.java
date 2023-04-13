@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.shell;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import static org.jline.utils.AttributedStyle.BLUE;
 import static org.jline.utils.AttributedStyle.DEFAULT;

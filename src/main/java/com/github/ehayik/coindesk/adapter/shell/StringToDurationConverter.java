@@ -1,8 +1,7 @@
-package com.github.ehayik.coindesk.shell;
+package com.github.ehayik.coindesk.adapter.shell;
 
 import java.time.Duration;
 import lombok.NonNull;
-import org.springframework.cloud.skipper.support.DurationUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
