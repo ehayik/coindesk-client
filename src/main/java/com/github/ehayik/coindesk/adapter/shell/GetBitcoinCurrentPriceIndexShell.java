@@ -53,7 +53,7 @@ public class GetBitcoinCurrentPriceIndexShell {
     @ShellMethod(
             value = "Stop displaying the Bitcoin Price Index (BPI).",
             key = {"stop bitcoin", "stop btc"})
-    void stopBitcoinPriceRequest() {
+    public void stopBitcoinPriceRequest() {
         stopEmitter.tryEmitNext(true);
     }
 
