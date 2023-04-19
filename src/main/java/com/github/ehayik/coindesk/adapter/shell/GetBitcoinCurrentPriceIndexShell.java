@@ -25,7 +25,7 @@ import reactor.core.publisher.Sinks;
 @Slf4j
 @ShellComponent
 @SuppressWarnings("unused")
-public class BitcoinPriceWatchingCommands {
+public class GetBitcoinCurrentPriceIndexShell {
 
     private static final String REFRESH_RATE_HELP =
             """
@@ -43,7 +43,7 @@ public class BitcoinPriceWatchingCommands {
     private final Sinks.Many<Boolean> stopEmitter;
     private final Pipeline pipeline;
 
-    BitcoinPriceWatchingCommands(ShellHelper shellHelper, Pipeline pipeline) {
+    GetBitcoinCurrentPriceIndexShell(ShellHelper shellHelper, Pipeline pipeline) {
         this.shellHelper = shellHelper;
         this.pipeline = pipeline;
         stopEmitter = Sinks.many().multicast().onBackpressureBuffer();
@@ -60,7 +60,7 @@ public class BitcoinPriceWatchingCommands {
     @ShellMethod(
             value = "Display the Bitcoin Price Index (BPI) in real-time.",
             key = {"bitcoin", "btc"})
-    public void displayBitcoinPrice(
+    public void watchBitcoinPrice(
             @ShellOption(
                             value = {"--watch", "-w"},
                             defaultValue = NULL,

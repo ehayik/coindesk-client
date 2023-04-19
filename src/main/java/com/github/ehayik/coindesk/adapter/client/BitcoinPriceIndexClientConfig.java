@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+@SuppressWarnings("unused")
 @Configuration
 class BitcoinPriceIndexClientConfig {
 

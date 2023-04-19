@@ -4,7 +4,7 @@ import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
-import com.github.ehayik.coindesk.adapter.shell.BitcoinPriceWatchingCommands;
+import com.github.ehayik.coindesk.adapter.shell.GetBitcoinCurrentPriceIndexShell;
 import com.github.ehayik.coindesk.adapter.shell.ShellHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
@@ -29,7 +29,7 @@ class GetBitcoinCurrentPriceIndexUseCaseTests {
     ShellHelper shellHelper;
 
     @Autowired
-    BitcoinPriceWatchingCommands commands;
+    GetBitcoinCurrentPriceIndexShell commands;
 
     @WireMock("bpi-service")
     WireMockServer wiremock;
@@ -42,13 +42,13 @@ class GetBitcoinCurrentPriceIndexUseCaseTests {
     }
 
     @ParameterizedTest
-    @MethodSource("watchingIntervalSource")
-    void watchBitcoinPriceShouldPrintPriceOne(Duration givenInterval) {
+    @MethodSource("refreshRateSource")
+    void givenInvalidRefreshRateThenShouldGetBitcoinCurrentPriceIndexOnlyOnce(Duration givenRefreshRate) {
         // Given
         mockCoinDeskServer.givenBitcoinPriceIndexRequest();
 
         // When
-        commands.displayBitcoinPrice(givenInterval);
+        commands.watchBitcoinPrice(givenRefreshRate);
 
         // Then
         assertThatPricesTableIsPrinted(atMostOnce());
@@ -64,17 +64,17 @@ class GetBitcoinCurrentPriceIndexUseCaseTests {
                     """);
     }
 
-    public static Stream<Duration> watchingIntervalSource() {
+    public static Stream<Duration> refreshRateSource() {
         return Stream.of(null, ZERO);
     }
 
     @Test
-    void watchBitcoinPriceShouldPrintPriceTwice() {
+    void givenValidRefreshRateThenShouldGetBitcoinCurrentPriceIndexTwice() {
         // Given
         mockCoinDeskServer.givenBitcoinPriceIndexRequest();
 
         // When
-        commands.displayBitcoinPrice(Duration.ofMillis(3));
+        commands.watchBitcoinPrice(Duration.ofMillis(3));
 
         // Then
         await().untilAsserted(() -> assertThatPricesTableIsPrinted(atLeast(2)));
