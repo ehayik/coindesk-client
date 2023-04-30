@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk;
+package com.github.ehayik.coindesk.test.fixtures;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -49,13 +49,13 @@ public class MockCoinDeskServer {
 
     private final Stubbing wiremock;
 
-    MockCoinDeskServerResponse givenBitcoinPriceIndexRequest() {
+    public MockCoinDeskServerResponse givenBitcoinPriceIndexRequest() {
         return new MockCoinDeskServerResponse(wiremock, get("/bpi/currentprice.json"))
                 .withHeader("Content-Type", "application/javascript")
                 .willReturn(DEFAULT_BTC_REQUEST);
     }
 
-    static class MockCoinDeskServerResponse {
+    public static class MockCoinDeskServerResponse {
 
         private final Stubbing wiremock;
         private final MappingBuilder request;
@@ -67,12 +67,12 @@ public class MockCoinDeskServer {
             response = aResponse();
         }
 
-        MockCoinDeskServerResponse withHeader(String key, String value) {
+        public MockCoinDeskServerResponse withHeader(String key, String value) {
             response = response.withHeader(key, value);
             return this;
         }
 
-        MockCoinDeskServerResponse willReturn(String body) {
+        public MockCoinDeskServerResponse willReturn(String body) {
             wiremock.stubFor(request.willReturn(response.withBody(body)));
             return this;
         }
