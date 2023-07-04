@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.core;
+package com.github.ehayik.coindesk.application.domain;
 
 import java.util.List;
 import java.util.stream.Stream;

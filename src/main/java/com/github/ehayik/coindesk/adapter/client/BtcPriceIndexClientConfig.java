@@ -14,11 +14,11 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @SuppressWarnings("unused")
 @Configuration
-class BitcoinPriceIndexClientConfig {
+class BtcPriceIndexClientConfig {
 
     @Bean
     @SuppressWarnings("unused")
-    BitcoinPriceIndexClient bitcoinPriceIndexClient(
+    BtcPriceIndexClient bitcoinPriceIndexClient(
             WebClient.Builder builder, @Value("${bpi-client.url}") String url, ObjectMapper objectMapper) {
         var customDecoder = new Jackson2JsonDecoder(objectMapper, parseMimeType("application/javascript"));
 
@@ -31,6 +31,6 @@ class BitcoinPriceIndexClientConfig {
         var httpServiceProxyFactory =
                 HttpServiceProxyFactory.builder(forClient(webClient)).build();
 
-        return httpServiceProxyFactory.createClient(BitcoinPriceIndexClient.class);
+        return httpServiceProxyFactory.createClient(BtcPriceIndexClient.class);
     }
 }

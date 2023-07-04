@@ -5,8 +5,8 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 import static org.springframework.shell.standard.ShellOption.NULL;
 
 import an.awesome.pipelinr.Pipeline;
-import com.github.ehayik.coindesk.core.BitcoinCurrentPriceIndexCommand;
-import com.github.ehayik.coindesk.core.PriceIndex;
+import com.github.ehayik.coindesk.application.domain.PriceIndex;
+import com.github.ehayik.coindesk.application.in.BtcCurrentPriceIndexCommand;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.annotation.PreDestroy;
@@ -25,7 +25,7 @@ import reactor.core.publisher.Sinks;
 @Slf4j
 @ShellComponent
 @SuppressWarnings("unused")
-public class GetBitcoinCurrentPriceIndexShell {
+public class GetBtcCurrentPriceIndexShell {
 
     private static final String REFRESH_RATE_HELP =
             """
@@ -43,7 +43,7 @@ public class GetBitcoinCurrentPriceIndexShell {
     private final Sinks.Many<Boolean> stopEmitter;
     private final Pipeline pipeline;
 
-    GetBitcoinCurrentPriceIndexShell(ShellHelper shellHelper, Pipeline pipeline) {
+    GetBtcCurrentPriceIndexShell(ShellHelper shellHelper, Pipeline pipeline) {
         this.shellHelper = shellHelper;
         this.pipeline = pipeline;
         stopEmitter = Sinks.many().multicast().onBackpressureBuffer();
@@ -67,7 +67,7 @@ public class GetBitcoinCurrentPriceIndexShell {
                             help = REFRESH_RATE_HELP)
                     Duration refreshRate) {
 
-        var bitcoinPriceIndex = Mono.from(new BitcoinCurrentPriceIndexCommand().execute(pipeline));
+        var bitcoinPriceIndex = Mono.from(new BtcCurrentPriceIndexCommand().execute(pipeline));
 
         if (refreshRate == null || refreshRate == ZERO) {
             bitcoinPriceIndex.blockOptional().ifPresent(this::printBitcoinPriceTable);

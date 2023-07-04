@@ -2,10 +2,9 @@ package com.github.ehayik.coindesk.adapter.client;
 
 import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.github.ehayik.coindesk.adapter.shell.GetBitcoinCurrentPriceIndexShell;
+import com.github.ehayik.coindesk.adapter.shell.GetBtcCurrentPriceIndexShell;
 import com.github.ehayik.coindesk.adapter.shell.ShellHelper;
 import com.github.ehayik.coindesk.test.fixtures.MockCoinDeskServer;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -26,13 +25,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 @EnableWireMock({@ConfigureWireMock(name = "bpi-service", property = "bpi-client.url")})
-class BitcoinPriceIndexAdapterTests {
+class BtcPriceIndexAdapterTests {
 
     @MockBean
     ShellHelper shellHelper;
 
     @Autowired
-    GetBitcoinCurrentPriceIndexShell shellCommands;
+    GetBtcCurrentPriceIndexShell shellCommands;
 
     @WireMock("bpi-service")
     WireMockServer wiremock;

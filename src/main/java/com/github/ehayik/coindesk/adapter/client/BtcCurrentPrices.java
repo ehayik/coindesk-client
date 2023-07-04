@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Setter
-public class BitcoinCurrentPrices {
+public class BtcCurrentPrices {
 
     private BitcoinPriceIndex bpi;
 

@@ -5,8 +5,8 @@ import org.springframework.web.service.annotation.HttpExchange;
 import reactor.core.publisher.Mono;
 
 @HttpExchange(url = "/bpi")
-public interface BitcoinPriceIndexClient {
+public interface BtcPriceIndexClient {
 
     @GetExchange(value = "/currentprice.json")
-    Mono<BitcoinCurrentPrices> getPriceIndexOnRealTime();
+    Mono<BtcCurrentPrices> getPriceIndexOnRealTime();
 }
