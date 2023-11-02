@@ -43,7 +43,8 @@ stop btc # stop displaying the bitcoin price index.
 I learned a lot from the projects and resources listed below:
 
 - [Developing CLI application with Spring Shell Series](https://medium.com/agency04/developing-cli-application-with-spring-shell-part-1-807cd3a32461) by [Domagoj Madunić](https://www.linkedin.com/in/domagoj-maduni%C4%87-7980751/)
-- [WireMock Spring Boot](https://github.com/maciejwalkowiak/wiremock-spring-boot) by [Maciej Walkowiak](https://maciejwalkowiak.com/)
+- [Spring Boot HTTP Clients](https://github.com/maciejwalkowiak/wiremock-spring-boot) by [Maciej Walkowiak](https://maciejwalkowiak.com/)
+- [WireMock Spring Boot](https://github.com/maciejwalkowiak/spring-boot-http-clients) by [Maciej Walkowiak](https://maciejwalkowiak.com/)
 - [Spring Boot Integration Tests With WireMock and JUnit 5](https://rieckpil.de/spring-boot-integration-tests-with-wiremock-and-junit-5/) by [Philip Riecks](https://twitter.com/rieckpil)
 - [Spring Shell Reference Documentation](https://docs.spring.io/spring-shell/docs/current/reference/htmlsingle/#_what_is_spring_shell)
 - [Declarative Clients in Spring](https://www.youtube.com/watch?v=3NcmlrumSOc) by [Olga Maciaszek-Sharma](https://www.linkedin.com/in/olgamaciaszek/?originalSubdomain=pl)

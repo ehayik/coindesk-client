@@ -1,10 +1,10 @@
 package com.github.ehayik.coindesk.adapter.client;
 
+import com.maciejwalkowiak.spring.http.annotation.HttpClient;
 import org.springframework.web.service.annotation.GetExchange;
-import org.springframework.web.service.annotation.HttpExchange;
 import reactor.core.publisher.Mono;
 
-@HttpExchange(url = "/bpi")
+@HttpClient("bpi-client")
 public interface BtcPriceIndexClient {
 
     @GetExchange(value = "/currentprice.json")
