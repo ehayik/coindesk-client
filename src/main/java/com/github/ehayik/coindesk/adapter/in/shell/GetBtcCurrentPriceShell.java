@@ -9,8 +9,9 @@ import com.github.ehayik.coindesk.application.domain.PriceIndex;
 import com.github.ehayik.coindesk.application.port.in.GetBtcCurrentPriceCommand;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import javax.annotation.PreDestroy;
 import javax.money.MonetaryAmount;
+
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
