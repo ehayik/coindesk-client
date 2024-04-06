@@ -10,6 +10,7 @@ import com.github.ehayik.coindesk.test.fixtures.MockCoinDeskServer;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
 import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
+import com.maciejwalkowiak.wiremock.spring.InjectWireMock;
 import com.maciejwalkowiak.wiremock.spring.WireMock;
 import java.time.Duration;
 import java.util.stream.Stream;
@@ -35,7 +36,7 @@ class BtcPriceIndexAdapterTests {
     private GetBtcCurrentPriceShell shellCommands;
 
     @SuppressWarnings("unused")
-    @WireMock("coindesk-server")
+    @InjectWireMock("coindesk-server")
     private WireMockServer coinDeskServer;
 
     private MockCoinDeskServer mockCoinDeskServer;
