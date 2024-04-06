@@ -21,7 +21,7 @@ class Mocks {
                       "disclaimer": "This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org",
                       "chartName": "Bitcoin",
                       "bpi": {
-                        "USD": { 
+                        "USD": {
                           "code": "USD",
                           "symbol": "&#36;",
                           "rate": "27,611.6511",

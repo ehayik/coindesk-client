@@ -1,31 +1,36 @@
 package com.github.ehayik.coindesk.adapter.client;
 
 import static com.github.ehayik.coindesk.adapter.client.Mocks.givenBitcoinCurrentPriceRequest;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
 import com.github.ehayik.coindesk.adapter.in.shell.GetBtcCurrentPriceShell;
 import com.github.ehayik.coindesk.adapter.in.shell.ShellHelper;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
-import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
-import com.maciejwalkowiak.wiremock.spring.InjectWireMock;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import java.time.Duration;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 
 @SpringBootTest
-@EnableWireMock({@ConfigureWireMock(name = "coindesk-server", property = "http.clients.coindesk-client.url")})
 class BtcPriceIndexAdapterTests {
+
+    @RegisterExtension
+    static WireMockExtension coinDeskServer = WireMockExtension.newInstance()
+            .options(wireMockConfig().dynamicPort())
+            .build();
 
     @MockBean
     private ShellHelper shellHelper;
@@ -33,9 +38,10 @@ class BtcPriceIndexAdapterTests {
     @Autowired
     private GetBtcCurrentPriceShell shellCommands;
 
-    @SuppressWarnings("unused")
-    @InjectWireMock("coindesk-server")
-    private WireMockServer coinDeskServer;
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("http.clients.coindesk-client.url", coinDeskServer::baseUrl);
+    }
 
     @AfterEach
     void tearDown() {
