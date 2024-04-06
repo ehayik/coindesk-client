@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.test.fixtures;
+package com.github.ehayik.coindesk.adapter.client;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -8,7 +8,7 @@ import com.github.tomakehurst.wiremock.junit.Stubbing;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = PRIVATE)
-public class Mocks {
+class Mocks {
 
     private static final String BTC_REQUEST_RESPONSE =
             """
@@ -46,7 +46,7 @@ public class Mocks {
                     }
                     """;
 
-    public static void givenBitcoinCurrentPriceRequest(Stubbing wiremock) {
+    static void givenBitcoinCurrentPriceRequest(Stubbing wiremock) {
         wiremock.stubFor(get("/v1/bpi/currentprice.json")
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/javascript")

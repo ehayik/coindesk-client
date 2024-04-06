@@ -1,6 +1,6 @@
 package com.github.ehayik.coindesk.adapter.client;
 
-import static com.github.ehayik.coindesk.test.fixtures.Mocks.givenBitcoinCurrentPriceRequest;
+import static com.github.ehayik.coindesk.adapter.client.Mocks.givenBitcoinCurrentPriceRequest;
 import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
