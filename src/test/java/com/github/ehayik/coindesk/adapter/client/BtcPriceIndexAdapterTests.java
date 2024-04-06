@@ -1,22 +1,19 @@
 package com.github.ehayik.coindesk.adapter.client;
 
+import static com.github.ehayik.coindesk.test.fixtures.Mocks.givenBitcoinCurrentPriceRequest;
 import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
 import com.github.ehayik.coindesk.adapter.in.shell.GetBtcCurrentPriceShell;
 import com.github.ehayik.coindesk.adapter.in.shell.ShellHelper;
-import com.github.ehayik.coindesk.test.fixtures.MockCoinDeskServer;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
 import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
 import com.maciejwalkowiak.wiremock.spring.InjectWireMock;
-
 import java.time.Duration;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,13 +37,6 @@ class BtcPriceIndexAdapterTests {
     @InjectWireMock("coindesk-server")
     private WireMockServer coinDeskServer;
 
-    private MockCoinDeskServer mockCoinDeskServer;
-
-    @BeforeEach
-    void setUp() {
-        mockCoinDeskServer = new MockCoinDeskServer(coinDeskServer);
-    }
-
     @AfterEach
     void tearDown() {
         shellCommands.stopBitcoinPriceRequest();
@@ -56,7 +46,7 @@ class BtcPriceIndexAdapterTests {
     @MethodSource("watchingIntervalSource")
     void shouldGetBitcoinCurrentPriceOnlyOnce(Duration givenInterval) {
         // Given
-        mockCoinDeskServer.givenBitcoinPriceIndexRequest();
+        givenBitcoinCurrentPriceRequest(coinDeskServer);
 
         // When
         shellCommands.watchBitcoinPrice(givenInterval);
@@ -83,7 +73,7 @@ class BtcPriceIndexAdapterTests {
     @Disabled("Because it fails on Github pipeline, however it works on my PC.")
     void shouldGetBitcoinCurrentPriceTwice() {
         // Given
-        mockCoinDeskServer.givenBitcoinPriceIndexRequest();
+        givenBitcoinCurrentPriceRequest(coinDeskServer);
 
         // When
         shellCommands.watchBitcoinPrice(Duration.ofMillis(3));
