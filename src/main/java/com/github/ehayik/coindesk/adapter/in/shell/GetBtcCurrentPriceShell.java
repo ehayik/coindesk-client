@@ -7,11 +7,10 @@ import static org.springframework.shell.standard.ShellOption.NULL;
 import an.awesome.pipelinr.Pipeline;
 import com.github.ehayik.coindesk.application.domain.PriceIndex;
 import com.github.ehayik.coindesk.application.port.in.GetBtcCurrentPriceCommand;
+import jakarta.annotation.PreDestroy;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.money.MonetaryAmount;
-
-import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;

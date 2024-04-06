@@ -11,9 +11,10 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
 import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
 import com.maciejwalkowiak.wiremock.spring.InjectWireMock;
-import com.maciejwalkowiak.wiremock.spring.WireMock;
+
 import java.time.Duration;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -26,7 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-@EnableWireMock({@ConfigureWireMock(name = "coindesk-server", property = "coindesk-client.url")})
+@EnableWireMock({@ConfigureWireMock(name = "coindesk-server", property = "http.clients.coindesk-client.url")})
 class BtcPriceIndexAdapterTests {
 
     @MockBean
@@ -68,10 +69,10 @@ class BtcPriceIndexAdapterTests {
         verify(shellHelper, wantedNumberOfPrints)
                 .print(
                         """
-                    +------------+------------+------------+
-                    |USD 27611.65|EUR 26897.78|GBP 23072.07|
-                    +------------+------------+------------+
-                    """);
+                                +------------+------------+------------+
+                                |USD 27611.65|EUR 26897.78|GBP 23072.07|
+                                +------------+------------+------------+
+                                """);
     }
 
     private static Stream<Duration> watchingIntervalSource() {
