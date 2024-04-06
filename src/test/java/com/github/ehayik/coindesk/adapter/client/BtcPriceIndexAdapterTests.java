@@ -4,8 +4,8 @@ import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
-import com.github.ehayik.coindesk.adapter.shell.GetBtcCurrentPriceIndexShell;
-import com.github.ehayik.coindesk.adapter.shell.ShellHelper;
+import com.github.ehayik.coindesk.adapter.in.shell.GetBtcCurrentPriceShell;
+import com.github.ehayik.coindesk.adapter.in.shell.ShellHelper;
 import com.github.ehayik.coindesk.test.fixtures.MockCoinDeskServer;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
@@ -25,23 +25,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-@EnableWireMock({@ConfigureWireMock(name = "bpi-service", property = "bpi-client.url")})
+@EnableWireMock({@ConfigureWireMock(name = "coindesk-server", property = "coindesk-client.url")})
 class BtcPriceIndexAdapterTests {
 
     @MockBean
-    ShellHelper shellHelper;
+    private ShellHelper shellHelper;
 
     @Autowired
-    GetBtcCurrentPriceIndexShell shellCommands;
+    private GetBtcCurrentPriceShell shellCommands;
 
-    @WireMock("bpi-service")
-    WireMockServer wiremock;
+    @SuppressWarnings("unused")
+    @WireMock("coindesk-server")
+    private WireMockServer coinDeskServer;
 
-    MockCoinDeskServer mockCoinDeskServer;
+    private MockCoinDeskServer mockCoinDeskServer;
 
     @BeforeEach
     void setUp() {
-        mockCoinDeskServer = new MockCoinDeskServer(wiremock);
+        mockCoinDeskServer = new MockCoinDeskServer(coinDeskServer);
     }
 
     @AfterEach
@@ -51,7 +52,7 @@ class BtcPriceIndexAdapterTests {
 
     @ParameterizedTest
     @MethodSource("watchingIntervalSource")
-    void givenInvalidRefreshRateThenShouldGetBitcoinCurrentPriceIndexOnlyOnce(Duration givenInterval) {
+    void shouldGetBitcoinCurrentPriceOnlyOnce(Duration givenInterval) {
         // Given
         mockCoinDeskServer.givenBitcoinPriceIndexRequest();
 
@@ -72,13 +73,13 @@ class BtcPriceIndexAdapterTests {
                     """);
     }
 
-    public static Stream<Duration> watchingIntervalSource() {
+    private static Stream<Duration> watchingIntervalSource() {
         return Stream.of(null, ZERO);
     }
 
     @Test
     @Disabled("Because it fails on Github pipeline, however it works on my PC.")
-    void givenValidRefreshRateThenShouldGetBitcoinCurrentPriceIndexTwice() {
+    void shouldGetBitcoinCurrentPriceTwice() {
         // Given
         mockCoinDeskServer.givenBitcoinPriceIndexRequest();
 

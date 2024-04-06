@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter.client;
+package com.github.ehayik.coindesk.adapter.out.coindesk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Setter
-public class BtcCurrentPrices {
+class BtcCurrentPrices {
 
     private BitcoinPriceIndex bpi;
 

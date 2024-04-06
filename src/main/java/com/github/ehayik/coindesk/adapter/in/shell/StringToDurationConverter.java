@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter.shell;
+package com.github.ehayik.coindesk.adapter.in.shell;
 
 import java.time.Duration;
 import lombok.NonNull;

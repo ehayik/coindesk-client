@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MockCoinDeskServer {
 
-    private static final String DEFAULT_BTC_REQUEST =
+    private static final String BTC_REQUEST_RESPONSE =
             """
                 {
                   "time": {
@@ -50,9 +50,9 @@ public class MockCoinDeskServer {
     private final Stubbing wiremock;
 
     public MockCoinDeskServerResponse givenBitcoinPriceIndexRequest() {
-        return new MockCoinDeskServerResponse(wiremock, get("/bpi/currentprice.json"))
+        return new MockCoinDeskServerResponse(wiremock, get("/v1/bpi/currentprice.json"))
                 .withHeader("Content-Type", "application/javascript")
-                .willReturn(DEFAULT_BTC_REQUEST);
+                .willReturn(BTC_REQUEST_RESPONSE);
     }
 
     public static class MockCoinDeskServerResponse {
