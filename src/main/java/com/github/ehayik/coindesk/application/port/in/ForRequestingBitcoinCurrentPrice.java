@@ -4,4 +4,4 @@ import an.awesome.pipelinr.Command;
 import com.github.ehayik.coindesk.application.domain.PriceIndex;
 import org.reactivestreams.Publisher;
 
-public class GetBtcCurrentPriceCommand implements Command<Publisher<PriceIndex>> {}
+public class ForRequestingBitcoinCurrentPrice implements Command<Publisher<PriceIndex>> {}

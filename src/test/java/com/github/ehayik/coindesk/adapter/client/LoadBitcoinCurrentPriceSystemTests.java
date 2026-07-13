@@ -5,7 +5,7 @@ import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
-import com.github.ehayik.coindesk.adapter.in.shell.GetBtcCurrentPriceShell;
+import com.github.ehayik.coindesk.adapter.in.shell.LoadBitcoinCurrentPriceShell;
 import com.github.ehayik.coindesk.adapter.in.shell.ShellHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
@@ -25,13 +25,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 @EnableWireMock({@ConfigureWireMock(name = "coindesk-server", property = "http.clients.coindesk-client.url")})
-class BtcPriceIndexAdapterTests {
+class LoadBitcoinCurrentPriceSystemTests {
 
     @MockBean
     private ShellHelper shellHelper;
 
     @Autowired
-    private GetBtcCurrentPriceShell shellCommands;
+    private LoadBitcoinCurrentPriceShell shellCommands;
 
     @SuppressWarnings("unused")
     @InjectWireMock("coindesk-server")

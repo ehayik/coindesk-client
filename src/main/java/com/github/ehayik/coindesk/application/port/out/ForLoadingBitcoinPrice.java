@@ -4,7 +4,7 @@ import java.util.List;
 import javax.money.MonetaryAmount;
 import org.reactivestreams.Publisher;
 
-public interface GetBtcCurrentPricePort {
+public interface ForLoadingBitcoinPrice {
 
-    Publisher<List<MonetaryAmount>> getBtcCurrentPrice();
+    Publisher<List<MonetaryAmount>> loadBitcoinCurrentPrice();
 }

@@ -1,6 +1,6 @@
 package com.github.ehayik.coindesk.adapter.out.coindesk;
 
-import com.github.ehayik.coindesk.application.port.out.GetBtcCurrentPricePort;
+import com.github.ehayik.coindesk.application.port.out.ForLoadingBitcoinPrice;
 import java.util.List;
 import javax.money.MonetaryAmount;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class GetBtcPriceAdapter implements GetBtcCurrentPricePort {
+class BitcoinPriceAdapter implements ForLoadingBitcoinPrice {
 
     private final CoinDeskClient priceIndexClient;
 
     @Override
-    public Publisher<List<MonetaryAmount>> getBtcCurrentPrice() {
-        return priceIndexClient.getBtcCurrentPrice().map(GetBtcPriceAdapter::asMonetaryAmountList);
+    public Publisher<List<MonetaryAmount>> loadBitcoinCurrentPrice() {
+        return priceIndexClient.getBtcCurrentPrice().map(BitcoinPriceAdapter::asMonetaryAmountList);
     }
 
     private static List<MonetaryAmount> asMonetaryAmountList(BtcCurrentPrices priceIndex) {
