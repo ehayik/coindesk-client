@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter.out.coindesk;
+package com.github.ehayik.coindesk.infrastructure.adapter.out.coindesk;
 
 import com.github.ehayik.coindesk.application.port.out.ForLoadingBitcoinPrice;
 import java.util.List;

@@ -13,4 +13,4 @@
 # :: Spring Boot :: ${spring-boot.formatted-version}
 #
 # (c) Ehayik Left-Handedness 2023
-#==================================================================================
+#===========

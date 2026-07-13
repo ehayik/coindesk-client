@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ehayik.coindesk.adapter.in.shell;
+package com.github.ehayik.coindesk.infrastructure.adapter.in.shell;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

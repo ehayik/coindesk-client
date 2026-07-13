@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter;
+package com.github.ehayik.coindesk.infrastructure;
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Notification;

@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter.out.coindesk;
+package com.github.ehayik.coindesk.infrastructure.adapter.out.coindesk;
 
 import com.maciejwalkowiak.spring.http.annotation.HttpClient;
 import org.springframework.web.service.annotation.GetExchange;

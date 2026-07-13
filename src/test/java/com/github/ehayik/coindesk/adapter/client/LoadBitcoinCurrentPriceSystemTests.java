@@ -5,8 +5,8 @@ import static java.time.Duration.ZERO;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
-import com.github.ehayik.coindesk.adapter.in.shell.LoadBitcoinCurrentPriceShell;
-import com.github.ehayik.coindesk.adapter.in.shell.ShellHelper;
+import com.github.ehayik.coindesk.infrastructure.adapter.in.shell.LoadBitcoinCurrentPriceShell;
+import com.github.ehayik.coindesk.infrastructure.adapter.in.shell.ShellHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
 import com.maciejwalkowiak.wiremock.spring.EnableWireMock;

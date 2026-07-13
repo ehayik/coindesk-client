@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.adapter.out.coindesk;
+package com.github.ehayik.coindesk.infrastructure.adapter.out.coindesk;
 
 import static org.springframework.util.MimeTypeUtils.parseMimeType;
 
