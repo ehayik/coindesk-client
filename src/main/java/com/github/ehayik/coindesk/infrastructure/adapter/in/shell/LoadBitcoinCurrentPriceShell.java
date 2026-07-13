@@ -6,7 +6,7 @@ import static org.springframework.shell.standard.ShellOption.NULL;
 
 import an.awesome.pipelinr.Pipeline;
 import com.github.ehayik.coindesk.application.domain.PriceIndex;
-import com.github.ehayik.coindesk.application.port.in.ForRequestingBitcoinCurrentPrice;
+import com.github.ehayik.coindesk.application.ports.in.ForRequestingBitcoinCurrentPrice;
 import jakarta.annotation.PreDestroy;
 import java.time.Duration;
 import java.time.LocalDateTime;

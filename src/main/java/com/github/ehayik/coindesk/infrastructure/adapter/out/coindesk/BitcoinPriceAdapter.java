@@ -1,6 +1,6 @@
 package com.github.ehayik.coindesk.infrastructure.adapter.out.coindesk;
 
-import com.github.ehayik.coindesk.application.port.out.ForLoadingBitcoinPrice;
+import com.github.ehayik.coindesk.application.ports.out.ForLoadingBitcoinPrice;
 import java.util.List;
 import javax.money.MonetaryAmount;
 import lombok.RequiredArgsConstructor;

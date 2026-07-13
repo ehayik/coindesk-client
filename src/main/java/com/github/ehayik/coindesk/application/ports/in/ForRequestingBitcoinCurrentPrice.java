@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.application.port.in;
+package com.github.ehayik.coindesk.application.ports.in;
 
 import an.awesome.pipelinr.Command;
 import com.github.ehayik.coindesk.application.domain.PriceIndex;

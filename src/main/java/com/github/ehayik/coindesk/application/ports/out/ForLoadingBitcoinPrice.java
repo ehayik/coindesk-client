@@ -1,4 +1,4 @@
-package com.github.ehayik.coindesk.application.port.out;
+package com.github.ehayik.coindesk.application.ports.out;
 
 import java.util.List;
 import javax.money.MonetaryAmount;

@@ -2,8 +2,8 @@ package com.github.ehayik.coindesk.application.usecase;
 
 import an.awesome.pipelinr.Command;
 import com.github.ehayik.coindesk.application.domain.PriceIndex;
-import com.github.ehayik.coindesk.application.port.in.ForRequestingBitcoinCurrentPrice;
-import com.github.ehayik.coindesk.application.port.out.ForLoadingBitcoinPrice;
+import com.github.ehayik.coindesk.application.ports.in.ForRequestingBitcoinCurrentPrice;
+import com.github.ehayik.coindesk.application.ports.out.ForLoadingBitcoinPrice;
 import com.github.ehayik.coindesk.common.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
